@@ -91,7 +91,7 @@ const FormItemsPayment = ({ formInstance, action, data }) => {
                 onChange={onChangeDiscount}
                 min={0}
                 formatter={(value) =>
-                  `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  `${value}đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 parser={(value) =>
                   value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
@@ -103,7 +103,7 @@ const FormItemsPayment = ({ formInstance, action, data }) => {
                 onChange={onChangeFee}
                 min={0}
                 formatter={(value) =>
-                  `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  `${value}đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
                 parser={(value) =>
                   value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
