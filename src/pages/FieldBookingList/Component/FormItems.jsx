@@ -1,5 +1,5 @@
 import { DatePicker, Form, Input, InputNumber, Modal, Select } from "antd";
-import { useGlobalConst } from "../../../utils/constData";
+import { formatPrice, parserPrice, useGlobalConst } from "../../../utils/constData";
 import { useSelector } from "react-redux";
 import { useFieldApi } from "../../../apiHelper/api/FieldApi";
 import { useEffect, useState } from "react";
@@ -206,12 +206,8 @@ const FormItems = ({ formInstance, action, data }) => {
             rules={[globalConst.ANT.FORM.RULES.yeuCauNhap]}
           >
             <InputNumber
-              formatter={(value) =>
-                `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
-              parser={(value) =>
-                value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-              }
+              formatter={formatPrice}
+              parser={parserPrice}
             />
           </Form.Item>
         </div>
@@ -224,12 +220,8 @@ const FormItems = ({ formInstance, action, data }) => {
             rules={[globalConst.ANT.FORM.RULES.yeuCauNhap]}
           >
             <InputNumber
-              formatter={(value) =>
-                `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              }
-              parser={(value) =>
-                value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-              }
+              formatter={formatPrice}
+              parser={parserPrice}
               disabled
             />
           </Form.Item>

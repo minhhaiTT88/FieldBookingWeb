@@ -1,5 +1,9 @@
 import { DatePicker, Form, Input, InputNumber, Select } from "antd";
-import { useGlobalConst } from "../../../utils/constData";
+import {
+  formatPrice,
+  parserPrice,
+  useGlobalConst,
+} from "../../../utils/constData";
 import { useSelector } from "react-redux";
 
 const FormItems = ({ formInstance, action, data }) => {
@@ -22,7 +26,10 @@ const FormItems = ({ formInstance, action, data }) => {
       <Form.Item
         label={`Số điện thoại`}
         name={"PhoneNumber"}
-        rules={[globalConst.ANT.FORM.RULES.yeuCauNhap, globalConst.ANT.FORM.RULES.soDienThoai]}
+        rules={[
+          globalConst.ANT.FORM.RULES.yeuCauNhap,
+          globalConst.ANT.FORM.RULES.soDienThoai,
+        ]}
       >
         <Input autoComplete="off" />
       </Form.Item>
@@ -32,7 +39,7 @@ const FormItems = ({ formInstance, action, data }) => {
         name={"IdentityNumber"}
         rules={[globalConst.ANT.FORM.RULES.yeuCauNhap]}
       >
-        <Input autoComplete="off" maxLength={11} />
+        <Input autoComplete="off" />
       </Form.Item>
 
       <Form.Item
@@ -41,7 +48,10 @@ const FormItems = ({ formInstance, action, data }) => {
         {...globalConst.ANT.FORM.ITEM.PARSER.DATE_DATABASE}
         rules={[globalConst.ANT.FORM.RULES.yeuCauNhap]}
       >
-        <DatePicker format={globalConst.ANT.LOCALE.dateFormat} placeholder="dd/MM/yyyy" />
+        <DatePicker
+          format={globalConst.ANT.LOCALE.dateFormat}
+          placeholder="dd/MM/yyyy"
+        />
       </Form.Item>
 
       <Form.Item
@@ -68,14 +78,7 @@ const FormItems = ({ formInstance, action, data }) => {
           globalConst.ANT.FORM.RULES.soLonHonKhong,
         ]}
       >
-        <InputNumber
-          formatter={(value) =>
-            `${value}đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          }
-          parser={(value) =>
-            value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-          }
-        />
+        <InputNumber formatter={formatPrice} parser={parserPrice} />
       </Form.Item>
       <Form.Item
         label={`Vị trí làm việc`}

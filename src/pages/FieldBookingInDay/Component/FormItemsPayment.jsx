@@ -1,5 +1,5 @@
 import { DatePicker, Form, Input, InputNumber, Modal, Select } from "antd";
-import { useGlobalConst } from "../../../utils/constData";
+import { formatPrice, parserPrice, useGlobalConst } from "../../../utils/constData";
 import { useSelector } from "react-redux";
 import Invoice from "../../../components/element/Invoice";
 
@@ -92,12 +92,8 @@ const FormItemsPayment = ({ formInstance, action, data }) => {
               <div className="flex-1">
                 <Form.Item label={`Tổng tiền`} name={"FieldPrice"} rules={[]}>
                   <InputNumber
-                    formatter={(value) =>
-                      `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
-                    parser={(value) =>
-                      value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-                    }
+                    formatter={formatPrice}
+                    parser={parserPrice}
                     disabled
                   />
                 </Form.Item>
@@ -108,12 +104,8 @@ const FormItemsPayment = ({ formInstance, action, data }) => {
                 <Form.Item label={`Tiền cọc`} name={"Deposit"} rules={[]}>
                   <InputNumber
                     disabled
-                    formatter={(value) =>
-                      `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
-                    parser={(value) =>
-                      value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-                    }
+                    formatter={formatPrice}
+                    parser={parserPrice}
                   />
                 </Form.Item>
               </div>
@@ -124,12 +116,8 @@ const FormItemsPayment = ({ formInstance, action, data }) => {
                   rules={[]}
                 >
                   <InputNumber
-                    formatter={(value) =>
-                      `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                    }
-                    parser={(value) =>
-                      value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-                    }
+                    formatter={formatPrice}
+                    parser={parserPrice}
                     disabled
                   />
                 </Form.Item>
@@ -162,24 +150,16 @@ const FormItemsPayment = ({ formInstance, action, data }) => {
               <InputNumber
                 onChange={onChangeDiscount}
                 min={0}
-                formatter={(value) =>
-                  `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={(value) =>
-                  value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-                }
+                formatter={formatPrice}
+                parser={parserPrice}
               />
             </Form.Item>
             <Form.Item label={`Phí`} name={"Fee"}>
               <InputNumber
                 onChange={onChangeFee}
                 min={0}
-                formatter={(value) =>
-                  `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={(value) =>
-                  value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-                }
+                formatter={formatPrice}
+                parser={parserPrice}
               />
             </Form.Item>
           </div>

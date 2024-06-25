@@ -507,3 +507,10 @@ export const DATE_MASKED = IMask.createMask({
   parse: (date) => moment(date, DATE_FORMAT),
   pattern: DATE_FORMAT,
 });
+
+export const formatPrice = (value) =>
+  `${value}đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
+export const parserPrice = (value) =>
+  value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
+

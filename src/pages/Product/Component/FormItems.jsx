@@ -139,12 +139,8 @@ const FormItems = ({ formInstance, action }) => {
         ]}
       >
         <InputNumber
-          formatter={(value) =>
-            `${value}đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-          }
-          parser={(value) =>
-            value?.replace(/\$\s?|(,*)/g, "")?.replace("đ", "")
-          }
+          formatter={formatPrice}
+          parser={parserPrice}
         />
       </Form.Item>
 
