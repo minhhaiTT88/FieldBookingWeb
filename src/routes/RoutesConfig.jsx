@@ -8,6 +8,7 @@ import Store from "../pages/Store/Index";
 
 import FieldBookingList from "../pages/FieldBookingList/Index";
 import FieldBookingInDay from "../pages/FieldBookingInDay/Index";
+import BillSearch from "../pages/BillSearch/Index";
 import Customer from "../pages/Customer/Index";
 
 //layout
@@ -15,16 +16,12 @@ import LayoutLeftSideBar from "../components/layout/LayoutLeftSideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBottleWater,
-  faBowlFood,
-  faFolder,
-  faFutbol,
-  faFutbolBall,
   faHome,
   faIdBadge,
   faListCheck,
+  faMagnifyingGlass,
   faMoneyBill,
   faStore,
-  faUserGroup,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -60,16 +57,16 @@ export const RoutersConfig = [
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: Field },
   },
-  {
-    Function_Id: "FIELDBOOKINGINDAY",
-    Function_Name: "Quản lý sân bóng",
-    icon: <FontAwesomeIcon icon={faMoneyBill} />,
-    DisplayOnMenu: 0,
-    checkRight: false,
-    Function_Url: "/quan-ly-san-bong/danh-sach-don-dat-san",
-    pageLayout: LayoutLeftSideBar,
-    pageContent: { component: FieldBookingInDay },
-  },
+  // {
+  //   Function_Id: "FIELDBOOKINGINDAY",
+  //   Function_Name: "Quản lý sân bóng",
+  //   icon: <FontAwesomeIcon icon={faMoneyBill} />,
+  //   DisplayOnMenu: 0,
+  //   checkRight: false,
+  //   Function_Url: "/quan-ly-san-bong/danh-sach-don-dat-san",
+  //   pageLayout: LayoutLeftSideBar,
+  //   pageContent: { component: FieldBookingInDay },
+  // },
   {
     Function_Id: "FEILDBOOKING",
     Function_Name: "DS đơn đặt sân tổng hợp",
@@ -79,6 +76,16 @@ export const RoutersConfig = [
     Function_Url: "/danh-sach-don-dat-san",
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: FieldBookingList },
+  },
+  {
+    Function_Id: "BILLSEARCH",
+    Function_Name: "Tra cứu hóa đơn",
+    icon: <FontAwesomeIcon icon={faMagnifyingGlass} />,
+    DisplayOnMenu: 1,
+    checkRight: false,
+    Function_Url: "/tra-cuu-hoa-don",
+    pageLayout: LayoutLeftSideBar,
+    pageContent: { component: BillSearch },
   },
   {
     Function_Id: "PRODUCT",

@@ -1,5 +1,6 @@
 import {
   Button,
+  ConfigProvider,
   DatePicker,
   Form,
   Input,
@@ -25,6 +26,9 @@ const FormItems = ({ formInstance, action, data }) => {
 
   const columns = columTimeSlotList();
 
+  // Lấy múi giờ của máy
+  const timezone = moment.tz.guess();
+
   const generateTimeSlots = (
     startTime,
     endTime,
@@ -47,6 +51,8 @@ const FormItems = ({ formInstance, action, data }) => {
       minute: endMinute,
     });
 
+    const a= currentTime.format('YYYY-MM-DDThh:mm:ss A');
+   
     var i = 0;
     while (currentTime < TimeTo) {
       let start = moment(currentTime);
@@ -59,10 +65,8 @@ const FormItems = ({ formInstance, action, data }) => {
       if (end.isAfter(TimeTo)) break;
 
       slots.push({
-        TimeFrom: start,
-        TimeFromStr: start.format("HH:mm"),
-        TimeTo: end,
-        TimeToStr: end.format("HH:mm"),
+        TimeFrom: start.format('YYYY-MM-DDTHH:mm:ssZ'),
+        TimeTo: end.format('YYYY-MM-DDTHH:mm:ssZ'),
         Price: 700000,
         Enable: true,
         Position: i,
@@ -95,6 +99,8 @@ const FormItems = ({ formInstance, action, data }) => {
       return;
     }
 
+    const listOld = formInstance.getFieldValue("TimeSlots");
+
     const listTimeSlot = generateTimeSlots(
       OpeningTime[0].format("HH:mm"),
       OpeningTime[1].format("HH:mm"),
@@ -102,7 +108,7 @@ const FormItems = ({ formInstance, action, data }) => {
       TimeOfSlot
     );
 
-    if (listTimeSlot.length > 0) {
+    if (listOld?.length > 0) {
       Modal.confirm({
         title: "Cảnh báo",
         content:
@@ -112,7 +118,6 @@ const FormItems = ({ formInstance, action, data }) => {
         centered: true,
         onOk: () => {
           formInstance.setFieldValue("TimeSlots", listTimeSlot);
-          setListTimeSlot(listTimeSlot);
         },
       });
     } else {
@@ -149,7 +154,7 @@ const FormItems = ({ formInstance, action, data }) => {
         label={`Trạng thái`}
         name={"Status"}
         {...globalConst.ANT.FORM.ITEM.SELECT.FORMAT_SELECT}
-        rules={[]}
+        rules={[globalConst.ANT.FORM.RULES.yeuCauNhap]}
       >
         <Select allowClear mode="single" showSearch optionFilterProp="children">
           {allCode
@@ -167,28 +172,36 @@ const FormItems = ({ formInstance, action, data }) => {
       </Form.Item>
 
       <div className="pb-4">
-        <div className="w-full flex justify-between py-3">
-          <h3 className="text-base font-bold">Danh sách khung giờ</h3>
-          <Button onClick={handleGenTimeSlot}>Tạo khung giờ</Button>
-        </div>
-        <div className="flex gap-4">
-          <Form.Item label={`Giờ mở sân trong ngày`} name="OpeningTime">
-            <RangePicker format="HH:mm" />
-          </Form.Item>
-          <Form.Item
-            label={`Thời gian nghỉ giữa giờ (phút)`}
-            name={"BreakTime"}
-          >
-            <InputNumber min={0} />
-          </Form.Item>
-          <Form.Item
-            label={`Thời gian một khung giờ (phút)`}
-            name={"TimeOfSlot"}
-            rules={[]}
-          >
-            <InputNumber />
-          </Form.Item>
-        </div>
+        {action === "create" && (
+          <>
+            <div className="w-full flex justify-between py-3">
+              <h3 className="text-base font-bold">Danh sách khung giờ</h3>
+              <Button onClick={handleGenTimeSlot}>Tạo khung giờ</Button>
+            </div>
+            <div className="flex gap-4">
+              <Form.Item label={`Giờ mở sân trong ngày`} name="OpeningTime">
+                <RangePicker
+                  format="HH:mm"
+                  needConfirm={false}
+                />
+              </Form.Item>
+              <Form.Item
+                label={`Thời gian nghỉ giữa giờ (phút)`}
+                name={"BreakTime"}
+              >
+                <InputNumber min={0} />
+              </Form.Item>
+              <Form.Item
+                label={`Thời gian một khung giờ (phút)`}
+                name={"TimeOfSlot"}
+                rules={[]}
+              >
+                <InputNumber />
+              </Form.Item>
+            </div>
+          </>
+        )}
+
         <Form.Item
           shouldUpdate={(prevValues, currentValues) =>
             prevValues.TimeSlots !== currentValues.TimeSlots

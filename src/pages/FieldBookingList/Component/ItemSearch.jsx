@@ -61,6 +61,8 @@ const ItemSearch = React.forwardRef(
           </Form.Item>
         </div>
 
+        
+
         <div className="ant-form-control ant-form-input">
           <label>Trạng thái</label>
           <Form.Item name={"Status"}>
@@ -80,6 +82,13 @@ const ItemSearch = React.forwardRef(
                   </Option>
                 ))}
             </Select>
+          </Form.Item>
+        </div>
+
+        <div className="ant-form-control ant-form-input">
+          <label>Ngày đặt sân</label>
+          <Form.Item name={"BookingDT_RANGE"}>
+            <RangePicker format="HH:mm" needConfirm={false} />
           </Form.Item>
         </div>
 

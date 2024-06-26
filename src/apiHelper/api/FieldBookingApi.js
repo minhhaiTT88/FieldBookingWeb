@@ -27,6 +27,15 @@ export const useFieldBookingApi = (controller) => {
         true
       );
     },
+    GetTimeSlotByDate: (fieldId, bookingDate) => {
+      return apiConnection.httpRequest(
+        "GET",
+        `api/FieldBooking/GetTimeSlotByDate`,
+        null,
+        { fieldId, bookingDate },
+        true
+      );
+    },
     Insert: (prop) => {
       return apiConnection.httpRequest(
         "POST",

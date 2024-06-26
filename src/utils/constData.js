@@ -415,7 +415,7 @@ export const useGlobalConst = () => {
           SELECT: {
             FORMAT_SELECT: {
               getValueProps: (i) => ({
-                value: i && i !== 0 ? i : null,
+                value: i && i !== null && i !== "" ? i : null,
               }),
             },
           },

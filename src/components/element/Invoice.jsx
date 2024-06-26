@@ -52,8 +52,7 @@ const Invoice = ({ data }) => {
           <p>
             Ngày tạo:
             <span className="text-gray-500">
-              {" "}
-              {moment().format("DD/MM/YYYY HH:mm")}
+              {moment(data?.DateCheckout).format("DD/MM/YYYY HH:mm:ss")}
             </span>
           </p>
           <p className="">

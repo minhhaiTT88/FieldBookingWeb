@@ -19,7 +19,7 @@ export const STAFF_STATUS = {
   daNghiViec: "B",
 };
 
-export const columFieldDefs = ({ HandleGetDetail, HandleDelete }) => {
+export const columFieldDefs = ({ ShowModal, HandleDelete }) => {
   const navigate = useNavigate();
   return [
     {
@@ -82,23 +82,20 @@ export const columFieldDefs = ({ HandleGetDetail, HandleDelete }) => {
                 <Button
                   type="actions"
                   onClick={() => {
-                    HandleGetDetail && HandleGetDetail(e.data, "detail");
+                    ShowModal && ShowModal(e.data, "detail");
                   }}
                 >
                   <FontAwesomeIcon icon={faEye} color="#999" />
                 </Button>
               </Tooltip>
-              <Tooltip placement="top" title="Danh sách đơn đặt sân trong ngày">
+              <Tooltip placement="top" title="Cập nhật">
                 <Button
                   type="actions"
                   onClick={() => {
-                    navigate(
-                      "/quan-ly-san-bong/danh-sach-don-dat-san?id=" +
-                        e.data.FieldId
-                    );
+                    ShowModal && ShowModal(e.data, "update");
                   }}
                 >
-                  <FontAwesomeIcon icon={faListCheck} color="#999" />
+                  <FontAwesomeIcon icon={faPencil} color="#999" />
                 </Button>
               </Tooltip>
               <Tooltip placement="top" title="Xóa">

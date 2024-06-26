@@ -1,5 +1,9 @@
 import { DatePicker, Form, Input, InputNumber, Modal, Select } from "antd";
-import { formatPrice, parserPrice, useGlobalConst } from "../../../utils/constData";
+import {
+  formatPrice,
+  parserPrice,
+  useGlobalConst,
+} from "../../../utils/constData";
 import { useSelector } from "react-redux";
 import { useFieldApi } from "../../../apiHelper/api/FieldApi";
 import { useEffect, useState } from "react";
@@ -8,6 +12,7 @@ import { useCustomerApi } from "../../../apiHelper/api/CustomerApi";
 import { FIELD_STATUS } from "./Comon";
 import dayjs from "dayjs";
 import vi from "antd/es/date-picker/locale/vi_VN";
+import { useFieldBookingApi } from "../../../apiHelper/api/FieldBookingApi";
 
 const FormItems = ({ formInstance, action, data }) => {
   const globalConst = useGlobalConst();
@@ -15,23 +20,30 @@ const FormItems = ({ formInstance, action, data }) => {
 
   const [lstField, setLstField] = useState([]);
   const [lstTimeSlot, setLstTimeSlot] = useState([]);
-  const apiClient = useFieldApi();
+  const apiField = useFieldApi();
+  const apiFieldBooking = useFieldBookingApi();
   const apiCustomer = useCustomerApi();
 
   const LoadFields = () => {
-    apiClient.GetAll().then((data) => {
+    apiField.GetAll().then((data) => {
       if (data) {
         setLstField(data);
       }
     });
   };
 
-  const GetTimeSlot = (id) => {
-    apiClient.GetById(id).then((data) => {
-      if (data && data?.TimeSlots) {
-        setLstTimeSlot(data?.TimeSlots?.filter((x) => x.Enable === true));
-      }
-    });
+  const GetTimeSlot = (fieldId) => {
+    let bookingDate =  formInstance.getFieldValue("BookingDate");
+    if (fieldId && bookingDate) {
+      bookingDate = moment(bookingDate).format("YYYY-MM-DD");
+      apiFieldBooking.GetTimeSlotByDate(fieldId, bookingDate).then((data) => {
+        if (data) {
+          setLstTimeSlot(data);
+        }
+      });
+    } else {
+      setLstTimeSlot([]);
+    }
   };
 
   useEffect(() => {
@@ -81,17 +93,6 @@ const FormItems = ({ formInstance, action, data }) => {
     }
   };
 
-  const buddhistLocale = {
-    ...vi,
-    lang: {
-      ...vi.lang,
-      fieldDateFormat: "BBBB-MM-DD",
-      fieldDateTimeFormat: "BBBB-MM-DD HH:mm:ss",
-      yearFormat: "BBBB",
-      cellYearFormat: "BBBB",
-    },
-  };
-
   return (
     <div className="field-list">
       <Form.Item name={"FieldBookingId"} hidden />
@@ -117,7 +118,7 @@ const FormItems = ({ formInstance, action, data }) => {
               globalConst.ANT.FORM.RULES.soDienThoai,
             ]}
           >
-            <Input autoComplete="off" onBlur={handleOnBlurPhoneNumber} />
+            <Input autoComplete="off" onBlur={handleOnBlurPhoneNumber} maxLength={10}/>
           </Form.Item>
         </div>
         <div className="flex-1">
@@ -134,7 +135,7 @@ const FormItems = ({ formInstance, action, data }) => {
       <div className="flex flex-nowrap gap-4">
         <div className="flex-1">
           <Form.Item
-            label="Date"
+            label="Ngày đặt sân"
             name="BookingDate"
             rules={[globalConst.ANT.FORM.RULES.yeuCauNhap]}
             {...globalConst.ANT.FORM.ITEM.PARSER.DATE_DATABASE}
@@ -185,10 +186,8 @@ const FormItems = ({ formInstance, action, data }) => {
                 onChange={handleOnChangeTimeSlot}
               >
                 {lstTimeSlot.map((item, key) => (
-                  <Option key={key} value={item.TimeSlotId}>
-                    {`${moment(item.TimeFrom).format("HH:mm")} - ${moment(
-                      item.TimeTo
-                    ).format("HH:mm")}`}
+                  <Option key={key} value={item.TimeSlotId} disabled={item.Valid === 0 || !item.Enable}>
+                    {item.TimeFormatted}
                   </Option>
                 ))}
               </Select>
@@ -205,10 +204,7 @@ const FormItems = ({ formInstance, action, data }) => {
             name={"Deposit"}
             rules={[globalConst.ANT.FORM.RULES.yeuCauNhap]}
           >
-            <InputNumber
-              formatter={formatPrice}
-              parser={parserPrice}
-            />
+            <InputNumber formatter={formatPrice} parser={parserPrice} />
           </Form.Item>
         </div>
       </div>

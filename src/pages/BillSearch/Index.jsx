@@ -7,42 +7,26 @@ import ItemSearch from "./Component/ItemSearch";
 import DataTableV2 from "../../components/controls/DataTableV2";
 
 import { Content } from "antd/lib/layout/layout";
-import { columFieldDefs } from "./Component/Comon";
+import { columStaffDefs } from "./Component/Comon";
 import FormItems from "./Component/FormItems";
-import { useFieldApi } from "../../apiHelper/api/FieldApi";
+import { useBillApi } from "../../apiHelper/api/BillApi";
 
 const Index = () => {
-  const apiClient = useFieldApi();
+  const apiClient = useBillApi();
   const [formSearch] = Form.useForm();
 
   const [form] = Form.useForm();
-  const [action, setAction] = useState("");
-  const [title, setTitle] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
 
   const ShowModal = (param, action) => {
-    if (action === "create") {
-      setTitle("Thêm mới");
-    } else if (action === "detail") {
-      setTitle("Chi tiết");
-    } else if (action === "update") {
-      setTitle("Cật nhật");
-    }
-    setAction(action);
     setModalOpen(true);
-
+console.log(param)
     if (param) {
       apiClient
-        .GetById(param.FieldId)
+        .GetById(param.BillId)
         .then((data) => {
           if (data) {
-            console.log(data);
-            form.setFieldsValue({
-              ...data,
-              OpeningTime: null,
-              BreakTime: 0,
-              TimeOfSlot: 90,
-            });
+            form.setFieldValue("Bill", data);
           }
         })
         .catch(function (err) {
@@ -54,39 +38,15 @@ const Index = () => {
   };
 
   const CloseModal = () => {
-    setAction("");
     setModalOpen(false);
   };
 
   const HandleDelete = (param) => {
     apiClient
-      .Delete(param.FieldId)
+      .Delete(param.StaffId)
       .then((data) => {
         if (data?.code > 0) {
           toast.success(data.message);
-          Search();
-        } else {
-          if (data?.code == -5) {
-            toast.error(
-              "Không thể xóa thông tin sân bóng này, thông tin sân bóng này đã được gán tại nghiệp vụ khác."
-            );
-          } else {
-            toast.error(data.message);
-          }
-        }
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  const HandleUpdate = (param) => {
-    apiClient
-      .Update(param)
-      .then((data) => {
-        if (data?.code > 0) {
-          toast.success(data.message);
-          CloseModal();
           Search();
         } else {
           toast.error(data.message);
@@ -97,24 +57,7 @@ const Index = () => {
       });
   };
 
-  const HandleCreate = (param) => {
-    apiClient
-      .Insert(param)
-      .then((data) => {
-        if (data?.code > 0) {
-          toast.success(data.message);
-          CloseModal();
-          Search();
-        } else {
-          toast.error(data.message);
-        }
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-  };
-
-  const columns = columFieldDefs({ ShowModal, HandleDelete });
+  const columns = columStaffDefs({ ShowModal, HandleDelete });
 
   const refs = useRef({ refDataGrid: useRef(null) });
 
@@ -150,7 +93,7 @@ const Index = () => {
         <Content className="main-layout-content">
           <Breadcrumb
             className="main-layout-breadcrumb"
-            items={[{ title: "Danh sách sân bóng" }]}
+            items={[{ title: "Danh sách hóa đơn" }]}
           />
 
           <div className="flex-content">
@@ -181,48 +124,20 @@ const Index = () => {
 
       {modalOpen && (
         <Modal
-          title={title}
+          title={"Chi tiết"}
           centered
           width={1226}
           open={modalOpen}
           onCancel={() => CloseModal()}
           footer={[
-            <Button
-              key="ok"
-              htmlType="submit"
-              type="outline"
-              hidden={action === "detail"}
-              onClick={() => {
-                form.submit();
-                form
-                  .validateFields()
-                  .then((values) => {
-                    console.log(values);
-                    if (action === "create") {
-                      HandleCreate(values);
-                    } else if (action === "update") {
-                      HandleUpdate(values);
-                    }
-                  })
-                  .catch((err) => {
-                    console.log(err);
-                  });
-              }}
-            >
-              Xác nhận
-            </Button>,
             <Button key="cancel" type="primary" onClick={() => CloseModal()}>
               Đóng
             </Button>,
           ]}
           className="ant-modal-scrollbar"
         >
-          <Form
-            form={form}
-            disabled={action === "detail" ? true : false}
-            className={action === "detail" ? "ant-form-details" : ""}
-          >
-            <FormItems formInstance={form} action={action} />
+          <Form form={form} disabled className={"ant-form-details"}>
+            <FormItems formInstance={form} />
           </Form>
         </Modal>
       )}

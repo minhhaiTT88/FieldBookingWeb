@@ -20,8 +20,8 @@ export const useBillApi = (controller) => {
         true
       );
     },
-    GetById: (id) => {
-      return apiConnection.httpRequest("GET", `api/bill/getdetailbyid`, null, { p_id: id }, true);
+    GetById: (value) => {
+      return apiConnection.httpRequest("GET", `api/bill/getdetailbyid`, null, { value }, true);
     },
     Insert: (prop) => {
       prop.CreatedBy = get_User_Name();
