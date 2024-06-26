@@ -26,9 +26,6 @@ const FormItems = ({ formInstance, action, data }) => {
 
   const columns = columTimeSlotList();
 
-  // Lấy múi giờ của máy
-  const timezone = moment.tz.guess();
-
   const generateTimeSlots = (
     startTime,
     endTime,

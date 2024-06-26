@@ -8,7 +8,7 @@ import {
   Select,
   Upload,
 } from "antd";
-import { useGlobalConst } from "../../../utils/constData";
+import { formatPrice, parserPrice, useGlobalConst } from "../../../utils/constData";
 import { useSelector } from "react-redux";
 import { faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
