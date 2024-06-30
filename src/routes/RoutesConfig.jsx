@@ -7,7 +7,6 @@ import Staff from "../pages/Staff/Index";
 import Store from "../pages/Store/Index";
 
 import FieldBookingList from "../pages/FieldBookingList/Index";
-import FieldBookingInDay from "../pages/FieldBookingInDay/Index";
 import BillSearch from "../pages/BillSearch/Index";
 import Customer from "../pages/Customer/Index";
 
@@ -24,6 +23,7 @@ import {
   faStore,
   faUsers,
 } from "@fortawesome/free-solid-svg-icons";
+import { User_Type_Enum } from "../utils/constData";
 
 export const RoutersConfig = [
   {
@@ -33,10 +33,10 @@ export const RoutersConfig = [
     DisplayOnMenu: 1,
     checkRight: false,
     Function_Url: "/",
+    FunctionType: [User_Type_Enum.Admin, User_Type_Enum.Staff],
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: Dashboard },
   },
-
   {
     Function_Id: "STORE",
     Function_Name: "Bán hàng",
@@ -44,8 +44,20 @@ export const RoutersConfig = [
     DisplayOnMenu: 1,
     checkRight: false,
     Function_Url: "/ban-hang",
+    FunctionType: [User_Type_Enum.Admin, User_Type_Enum.Staff],
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: Store },
+  },
+  {
+    Function_Id: "FEILDBOOKING",
+    Function_Name: "Quản lý đặt sân",
+    icon: <FontAwesomeIcon icon={faListCheck} />,
+    DisplayOnMenu: 1,
+    checkRight: false,
+    Function_Url: "/quan-ly-don-dat-san",
+    FunctionType: [User_Type_Enum.Admin, User_Type_Enum.Staff],
+    pageLayout: LayoutLeftSideBar,
+    pageContent: { component: FieldBookingList },
   },
   {
     Function_Id: "FIELD",
@@ -54,28 +66,9 @@ export const RoutersConfig = [
     DisplayOnMenu: 1,
     checkRight: false,
     Function_Url: "/quan-ly-san-bong",
+    FunctionType: [User_Type_Enum.Admin],
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: Field },
-  },
-  // {
-  //   Function_Id: "FIELDBOOKINGINDAY",
-  //   Function_Name: "Quản lý sân bóng",
-  //   icon: <FontAwesomeIcon icon={faMoneyBill} />,
-  //   DisplayOnMenu: 0,
-  //   checkRight: false,
-  //   Function_Url: "/quan-ly-san-bong/danh-sach-don-dat-san",
-  //   pageLayout: LayoutLeftSideBar,
-  //   pageContent: { component: FieldBookingInDay },
-  // },
-  {
-    Function_Id: "FEILDBOOKING",
-    Function_Name: "DS đơn đặt sân tổng hợp",
-    icon: <FontAwesomeIcon icon={faListCheck} />,
-    DisplayOnMenu: 1,
-    checkRight: false,
-    Function_Url: "/danh-sach-don-dat-san",
-    pageLayout: LayoutLeftSideBar,
-    pageContent: { component: FieldBookingList },
   },
   {
     Function_Id: "BILLSEARCH",
@@ -84,6 +77,7 @@ export const RoutersConfig = [
     DisplayOnMenu: 1,
     checkRight: false,
     Function_Url: "/tra-cuu-hoa-don",
+    FunctionType: [User_Type_Enum.Admin, User_Type_Enum.Staff],
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: BillSearch },
   },
@@ -94,6 +88,7 @@ export const RoutersConfig = [
     DisplayOnMenu: 1,
     checkRight: false,
     Function_Url: "/quan-ly-san-pham",
+    FunctionType: [User_Type_Enum.Admin, User_Type_Enum.Staff],
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: Product },
   },
@@ -104,6 +99,7 @@ export const RoutersConfig = [
     DisplayOnMenu: 1,
     checkRight: false,
     Function_Url: "/quan-ly-nhan-su",
+    FunctionType: [User_Type_Enum.Admin],
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: Staff },
   },
@@ -114,6 +110,7 @@ export const RoutersConfig = [
     DisplayOnMenu: 1,
     checkRight: false,
     Function_Url: "/danh-sach-khach-hang",
+    FunctionType: [User_Type_Enum.Admin, User_Type_Enum.Staff],
     pageLayout: LayoutLeftSideBar,
     pageContent: { component: Customer },
   },

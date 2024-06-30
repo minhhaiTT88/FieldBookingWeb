@@ -22,7 +22,7 @@ export const get_token = () => {
 
 export const get_User_Name = () => {
   const userLocalStorage = getUserFromStorage();
-  return userLocalStorage?.User_Name;
+  return userLocalStorage?.UserName;
 };
 
 export const get_link_server_file = () => {

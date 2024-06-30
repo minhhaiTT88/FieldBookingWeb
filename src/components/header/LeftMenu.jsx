@@ -1,5 +1,4 @@
-import { faFolder, faHome } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import { Menu } from "antd";
 import Sider from "antd/es/layout/Sider";
 import React, { useState } from "react";
@@ -7,14 +6,17 @@ import { useNavigate } from "react-router-dom";
 
 import logo from "../../assets/image/logo.png";
 import { RoutersConfig } from "../../routes/RoutesConfig";
+import { useSelector } from "react-redux";
 const LeftMenu = () => {
   const [collapsed, setCollapsed] = useState(true);
   const navigate = useNavigate();
 
+  const userLogin = useSelector((state) => state.authReducer);
+
   const getListItemMenu = () => {
     const currentUrl = location.pathname.split("/")[1];
     const _lstItems =
-      RoutersConfig?.filter((x) => x.DisplayOnMenu === 1)?.map((item, k) => {
+      RoutersConfig?.filter((x) => x.FunctionType.includes(userLogin?.UserType) && x.DisplayOnMenu === 1)?.map((item, k) => {
         const funtionUrlActive = item.Function_Url.split("/")[1];
         return {
           ...item,

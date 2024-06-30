@@ -1,5 +1,4 @@
-import md5 from "md5";
-import { getUserFromStorage, get_User_Name } from "../../store/actions/sharedActions";
+
 import { useAxios } from "../connection/APIConnection";
 
 export const useBillApi = (controller) => {
@@ -24,8 +23,6 @@ export const useBillApi = (controller) => {
       return apiConnection.httpRequest("GET", `api/bill/getdetailbyid`, null, { value }, true);
     },
     Insert: (prop) => {
-      prop.CreatedBy = get_User_Name();
-
       return apiConnection.httpRequest(
         "POST",
         "api/bill/Insert",
@@ -41,33 +38,6 @@ export const useBillApi = (controller) => {
         prop,
         null,
         true,
-      );
-    },
-    Update: (prop) => {
-      prop.Modified_By = get_User_Name();
-      if (prop.IsPriavate == 1 && prop.Password != "") {
-        prop.Password = md5(prop.Password);
-      }
-
-      return apiConnection.httpRequest(
-        "POST",
-        "api/bill/update",
-        prop,
-        null,
-        true,
-        "multipart/form-data"
-      );
-    },
-    Delete: (p_id) => {
-      return apiConnection.httpRequest(
-        "POST",
-        "api/bill/delete",
-        null,
-        {
-          p_id: p_id,
-          p_Modified_By: get_User_Name(),
-        },
-        true
       );
     },
   };

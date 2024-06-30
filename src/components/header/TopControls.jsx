@@ -7,7 +7,7 @@ import { getUserFromStorage, removeUserFromStorage } from "../../store/actions/s
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLoginApi } from "../../apiHelper/api/login";
-import { User_Type_Enum } from "../../utils/constData";
+
 import { useNavigate } from "react-router-dom";
 
 const TopControls = () => {
@@ -31,16 +31,6 @@ const TopControls = () => {
       });
   };
 
-  const gotoProfile = () => {
-    try {
-      const userLocal = getUserFromStorage();
-      if (userLocal.User_Type == User_Type_Enum.Company) {
-        navigate("/company-profile");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const items = [
     // {
     //   label: <a onClick={gotoProfile}>Profile</a>,
@@ -84,7 +74,7 @@ const TopControls = () => {
               />
             </div>
             <div className="user_name">
-              <span>{userLogin.User_Name}</span>
+              <span>{userLogin.UserName}</span>
             </div>
           </Space>
         </Dropdown>

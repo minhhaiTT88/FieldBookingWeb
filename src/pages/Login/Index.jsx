@@ -15,7 +15,7 @@ const Index = () => {
 
   const onFinish = async (values) => {
     let param = {
-      User_Name: values?.User_Name,
+      UserName: values?.UserName,
       Password: md5(values?.Password),
       Grant_Type: "password",
       Refresh_Token: "",
@@ -24,7 +24,8 @@ const Index = () => {
     apiClient
       .Login(param)
       .then((res) => {
-        if (res != undefined && res.status === 200 && res.data.User_Id > 0) {
+        
+        if (res != undefined && res.status === 200 && res.data.UserId > 0) {
           saveUserToStorage(res.data);
           dispatch({ type: "SET_USER", payload: res.data });
 
@@ -32,7 +33,7 @@ const Index = () => {
             localStorage.setItem(
               "userRemember",
               JSON.stringify({
-                User_Name: values?.txtUsername,
+                UserName: values?.txtUsername,
                 Password: values?.pwbPassword,
                 Remember: values?.remember,
               })
@@ -40,9 +41,10 @@ const Index = () => {
           }
 
           toast.success("Đăng nhập thành công");
-          navigate("/quan-ly-bai-viet");
+
+          navigate("/");
         } else {
-          toast.error(res.data.message);
+          toast.error(res.data.Message);
         }
       })
       .catch((err) => {
@@ -66,7 +68,7 @@ const Index = () => {
             <div className="flex flex-col gap-3">
               <Form.Item
                 label="Tài khoản"
-                name={"User_Name"}
+                name={"UserName"}
                 rules={[
                   {
                     required: true,

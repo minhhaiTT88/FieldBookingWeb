@@ -59,13 +59,13 @@ client.interceptors.response.use(
         const userLocalStorage = getUserFromStorage();
         if (
           userLocalStorage != undefined &&
-          userLocalStorage.User_Name != undefined &&
-          userLocalStorage.User_Name != ""
+          userLocalStorage.UserName != undefined &&
+          userLocalStorage.UserName != ""
         ) {
           let userLogin = {
             Grant_Type: "refresh_token",
             Refresh_Token: userLocalStorage?.Refresh_Token,
-            User_Name: userLocalStorage?.User_Name,
+            UserName: userLocalStorage?.UserName,
             Password: "",
           };
 
@@ -76,7 +76,7 @@ client.interceptors.response.use(
                 userLocalStorage.Access_Token = res.data.Access_Token;
                 userLocalStorage.Refresh_Token = res.data.Refresh_Token;
                 userLocalStorage.ExpiryTime = res.data.ExpiryTime;
-                userLocalStorage.User_Name = res.data.User_Name;
+                userLocalStorage.UserName = res.data.UserName;
 
                 saveUserToStorage(userLocalStorage);
                 window.postMessage({ type: "RESET_TOKEN", payload: res.data });

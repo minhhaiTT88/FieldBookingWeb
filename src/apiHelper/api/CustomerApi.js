@@ -1,8 +1,4 @@
-import md5 from "md5";
-import {
-  getUserFromStorage,
-  get_User_Name,
-} from "../../store/actions/sharedActions";
+
 import { useAxios } from "../connection/APIConnection";
 
 export const useCustomerApi = (controller) => {

@@ -1,4 +1,8 @@
-import { Navigate, RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { RoutersConfig } from "./routes/RoutesConfig.jsx";
@@ -17,14 +21,13 @@ import "react-toastify/dist/ReactToastify.css";
 import "./assets/scss/main.css";
 import "./index.css";
 
-
 function App() {
   const loginApi = useLoginApi();
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.authReducer);
-  // const isLogin = userLogin && userLogin.User_Id;
-  const isLogin = true;
+  const isLogin = userLogin && userLogin.UserId > 0;
+  // const isLogin = true;
   const _handleVisibilityChange = (e) => {
     if (isLogin && document.visibilityState !== "hidden") {
       loginApi
@@ -49,13 +52,17 @@ function App() {
       }
     }
   };
-  
-  useEffect(() => {
-    // connectWS();
-  },[]);
 
   useEffect(() => {
-    document.addEventListener("visibilitychange", _handleVisibilityChange, false);
+    connectWS();
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener(
+      "visibilitychange",
+      _handleVisibilityChange,
+      false
+    );
 
     window.addEventListener("message", _handlePostMessage, false);
 
@@ -77,25 +84,15 @@ function App() {
     }
 
     return () => {
-      document.removeEventListener("visibilitychange", _handleVisibilityChange, false);
+      document.removeEventListener(
+        "visibilitychange",
+        _handleVisibilityChange,
+        false
+      );
 
       window.removeEventListener("message", _handlePostMessage, false);
     };
   }, [userLogin]);
-
-  const checkFunction = (props) => {
-    let result;
-    if (props.checkRight) {
-      //nếu yêu cầu phân quyền thì dùng url ở function
-      result = userLogin?.FunctionSettings?.find(function (e) {
-        return e.Function_Id == props.Function_Id;
-      });
-    } else {
-      //nếu k yêu cầu phân quyền thì lấy url ở router config
-      result = { Function_Id: props.Function_Id, Function_Url: props.Function_Url };
-    }
-    return result;
-  };
 
   const getlstRouter = () => {
     let _lstRouters = [];
@@ -117,15 +114,18 @@ function App() {
       path: "/login",
       element: <Navigate to="/" replace />,
     });
-
-    RoutersConfig?.map((item, index) => {
-      const func = checkFunction(item);
-      if (func != undefined && func.Function_Id != undefined) {
-        _lstRouters.push({
-          path: func.Function_Url,
-          element: item.pageLayout ? <item.pageLayout {...item.pageContent} /> : <item.pageContent />,
-        });
-      }
+    
+    RoutersConfig?.filter((x) =>
+      x.FunctionType.includes(userLogin?.UserType)
+    )?.map((item) => {
+      _lstRouters.push({
+        path: item.Function_Url,
+        element: item.pageLayout ? (
+          <item.pageLayout {...item.pageContent} />
+        ) : (
+          <item.pageContent />
+        ),
+      });
     });
 
     return _lstRouters ?? [];
@@ -152,7 +152,9 @@ function App() {
 
       <div className="loader" id="Loader">
         <div className="image-container">
-          <div className="image-container-two">{/* <img src={logo} className="image" /> */}</div>
+          <div className="image-container-two">
+            {/* <img src={logo} className="image" /> */}
+          </div>
         </div>
       </div>
     </>

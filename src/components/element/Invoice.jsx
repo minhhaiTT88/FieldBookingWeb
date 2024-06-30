@@ -114,7 +114,7 @@ const Invoice = ({ data }) => {
                   {formatNumberVND(item.Price)}
                 </td>
                 <td className="py-1 pl-3 pr-4 text-right text-sm text-gray-500 sm:pr-0">
-                  {formatNumberVND(item.Price)}
+                  {formatNumberVND(item.Total)}
                 </td>
               </tr>
             ))}

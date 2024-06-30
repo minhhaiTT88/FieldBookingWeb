@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *,
 *::before,
 *::after {
@@ -325,6 +326,17 @@ button:focus {
 }
 .ag-theme-quartz .ant-btn-actions:disabled svg {
   color: #dadada;
+}
+
+.tow-col-responesive {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+@media (min-width: 768px) {
+  .tow-col-responesive {
+    grid-template-columns: 1fr 1fr; /* Hai cột khi màn hình rộng từ 768px trở lên */
+  }
 }
 
 .ant-form.form-search .flex-controls {

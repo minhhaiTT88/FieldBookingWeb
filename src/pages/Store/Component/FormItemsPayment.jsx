@@ -1,5 +1,9 @@
 import { DatePicker, Form, Input, InputNumber, Modal, Select } from "antd";
-import { formatPrice, parserPrice, useGlobalConst } from "../../../utils/constData";
+import {
+  formatPrice,
+  parserPrice,
+  useGlobalConst,
+} from "../../../utils/constData";
 import { useSelector } from "react-redux";
 import Invoice from "../../../components/element/Invoice";
 
@@ -105,7 +109,11 @@ const FormItemsPayment = ({ formInstance, action, data }) => {
 
             <div className="flex flex-nowrap gap-4">
               <div className="flex-1">
-                <Form.Item label={`Tổng tiền`} name={"TotalBeforeDiscount"} rules={[]}>
+                <Form.Item
+                  label={`Tổng tiền`}
+                  name={"TotalBeforeDiscount"}
+                  rules={[]}
+                >
                   <InputNumber
                     formatter={formatPrice}
                     parser={parserPrice}
@@ -119,7 +127,7 @@ const FormItemsPayment = ({ formInstance, action, data }) => {
         <div className="flex-1">
           <Form.Item
             shouldUpdate={(prevValues, currentValues) =>
-              prevValues.Code !== currentValues.Code
+              prevValues !== currentValues
             }
           >
             {({ getFieldValue, getFieldsValue }) => {

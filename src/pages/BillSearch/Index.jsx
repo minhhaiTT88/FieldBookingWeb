@@ -20,7 +20,7 @@ const Index = () => {
 
   const ShowModal = (param, action) => {
     setModalOpen(true);
-console.log(param)
+
     if (param) {
       apiClient
         .GetById(param.BillId)

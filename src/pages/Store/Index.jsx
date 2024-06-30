@@ -3,11 +3,9 @@ import { toast } from "react-toastify";
 import {
   Breadcrumb,
   Button,
-  Card,
   Col,
   Form,
   Input,
-  InputNumber,
   List,
   Modal,
   Row,
@@ -16,19 +14,10 @@ import {
 
 import ItemSearch from "./Component/ItemSearch";
 
-import { usePostsApi } from "../../apiHelper/api/PostsApi";
 import { Content } from "antd/lib/layout/layout";
-import { columPostList } from "./Component/Comon";
-import { Footer } from "antd/es/layout/layout";
-import PaginationV2 from "../../components/controls/PaginationV2";
 import ProductCard from "./Component/ProductCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCashRegister,
-  faPlus,
-  faSubtract,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCashRegister } from "@fortawesome/free-solid-svg-icons";
 import ItemInCart from "./Component/ItemInCart";
 import { formatNumberV2 } from "../../utils/convertData";
 import { useGlobalConst } from "../../utils/constData";
@@ -241,10 +230,9 @@ const Index = () => {
             Count: e.Count,
             Price: e.Price,
             Total: e.Price * e.Count,
-            Type: "PR"
+            Type: "PR",
           })) || [];
 
-        console.log(billDetails);
 
         const fieldName = lstField.find(
           (x) => x.FieldId == values.FieldId

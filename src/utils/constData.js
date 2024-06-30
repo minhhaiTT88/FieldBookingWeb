@@ -478,9 +478,8 @@ export const Sh_Article_Hottype = {
 };
 
 export const User_Type_Enum = {
-  Admin: 0,
-  Company: 1,
-  Shareholder: 2,
+  Admin: "A",
+  Staff: "S"
 };
 
 export const App_Enum = {
