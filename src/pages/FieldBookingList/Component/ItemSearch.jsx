@@ -88,7 +88,7 @@ const ItemSearch = React.forwardRef(
         <div className="ant-form-control ant-form-input">
           <label>Ngày đặt sân</label>
           <Form.Item name={"BookingDT_RANGE"}>
-            <RangePicker format="HH:mm" needConfirm={false} />
+            <RangePicker format="DD/MM/YYYY" needConfirm={false} />
           </Form.Item>
         </div>
 
