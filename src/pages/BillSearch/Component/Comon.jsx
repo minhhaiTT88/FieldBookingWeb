@@ -21,6 +21,11 @@ export const columStaffDefs = ({ ShowModal, HandleDelete }) => {
       width: 250,
     },
     {
+      field: "PhoneNumber",
+      headerName: "Số điện thoại",
+      width: 180,
+    },
+    {
       field: "FieldName",
       headerName: "Sân",
       width: 250,

@@ -210,7 +210,7 @@ export const columFieldBookingDefs = ({
                   icon={<FontAwesomeIcon icon={faCashRegister} />}
                 />
               </Tooltip>
-              <Tooltip placement="top" title="Cập nhật">
+              {/* <Tooltip placement="top" title="Cập nhật">
                 <Button
                   type="actions"
                   disabled={!(e.data.Status == FIELD_STATUS.pending)}
@@ -219,7 +219,7 @@ export const columFieldBookingDefs = ({
                   }}
                   icon={<FontAwesomeIcon icon={faPencil} />}
                 />
-              </Tooltip>
+              </Tooltip> */}
               <Tooltip placement="top" title="Xóa">
                 <Button
                   type="actions"

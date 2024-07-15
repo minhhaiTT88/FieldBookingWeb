@@ -14,7 +14,7 @@ const ItemSearch = React.forwardRef(({ formInstance, onSubmit, ShowModal }, ref)
   return (
     <div className="flex-controls">
       <div className="ant-form-control ant-form-input">
-        <label>Tên nhân viên</label>
+        <label>Tên khách hàng</label>
         <Form.Item name={"Name"}>
           <Input />
         </Form.Item>
@@ -36,7 +36,7 @@ const ItemSearch = React.forwardRef(({ formInstance, onSubmit, ShowModal }, ref)
           Tìm kiếm
         </Button>
       </div>
-      <div className="ant-form-control">
+      {/* <div className="ant-form-control">
         <Button
           type="primary"
           className="light-orange"
@@ -47,7 +47,7 @@ const ItemSearch = React.forwardRef(({ formInstance, onSubmit, ShowModal }, ref)
           <FontAwesomeIcon icon={faPlus} />
           <span>Thêm mới</span>
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 });
